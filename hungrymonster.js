@@ -26,14 +26,14 @@ display = (data)=>{
         const mealImg = mealList.strMealThumb;
        
         const mealInfo = `
-        <img class="img-fluid img-thumbnail" src="${mealImg}" alt="">
-        <h4 class = "text-danger">${mealName}</h4>
+        <img class="img-fluid mb-4" src="${mealImg}" alt="">
+        <h5 class = "text-danger text-center">${mealName}</h5>
         `;
 
          mealChildDiv.innerHTML = mealInfo;
          mealParentDiv.appendChild(mealChildDiv);
         
-         
+         mealChildDiv.className = "size m-5 col-md-3";
 
     });
    
