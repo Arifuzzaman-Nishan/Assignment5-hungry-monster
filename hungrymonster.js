@@ -1,33 +1,52 @@
+//global variable
+let mealParentDiv;
+let mealChildDiv;
+
+
+//to get html tag by id
 getId = (id) => {
     return document.getElementById(id);
 }
 
 
+//here to get data from API
 getDataFromApi = (foodName) => {
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foodName}`)
         .then(res => res.json())
-        .then(data => display(data))
+        .then(data => {
+            if(data.meals === null){
+                getId("not-found").innerText = "Sorry! This Meal is not Available";
+            }
+            else mealImageAndName(data);
+        })
 }
 
 
-//search btn
+//here the even handler for search button
 getId("search-btn").addEventListener("click", () => {
+
     catchHtmlTagById("meal-details");
     catchHtmlTagById("meal-parent-div");
 
+    getId("not-found").innerText="";
+
     const searchInputText = getId("search-input-text").value;
-    getDataFromApi(searchInputText);
+    
+    (searchInputText === "")?   getId("not-found").innerText = "Sorry! Please Enter a meal Name" : getDataFromApi(searchInputText);
+
 })
 
-let mealParentDiv;
 
+//to store the HTML tag by ID
 catchHtmlTagById = (parentId) => {
     mealParentDiv = getId(parentId);
     mealParentDiv.innerHTML = "";
     mealParentDiv = getId(parentId);
 }
 
-const display = (data) => {
+
+// here it store the all meal image and name from the api data
+const mealImageAndName = (data) => {
 
     console.log(data);
 
@@ -36,6 +55,7 @@ const display = (data) => {
     const mealItems = data.meals;
 
     mealItems.forEach(mealList => {
+
         const mealName = mealList.strMeal;
         const mealImg = mealList.strMealThumb;
         const mealId = mealList.idMeal;
@@ -45,7 +65,9 @@ const display = (data) => {
         <h5 onclick = "getDataByMealId('${mealId}')" class = "text-danger text-center">${mealName}</h5>
         `;
 
-        displayDetails(mealTagInfo);
+        ///it display to the user to show the information
+        display(mealTagInfo);
+        
     });
 
 }
@@ -54,13 +76,15 @@ const display = (data) => {
 getDataByMealId = (mealId) => {
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
         .then(response => response.json())
-        .then(data => displayMealDetails(data.meals[0]))
+        .then(data => specificMealDetails(data.meals[0]))
 }
 
 
 let mealTagInfo ;
 
-displayMealDetails = (mealItem) => {
+
+//it store the all specific meal details
+specificMealDetails = (mealItem) => {
     const mealName = mealItem.strMeal;
     const mealImg = mealItem.strMealThumb;
 
@@ -84,18 +108,19 @@ displayMealDetails = (mealItem) => {
 
     catchHtmlTagById("meal-details");
 
-    displayDetails(mealTagInfo);
+    display(mealTagInfo);
    
 
 }
-let mealChildDiv ;
 
-displayDetails = (mealTagInfo) => {
+
+
+//it display the meal information to user
+display = (mealTagInfo) => {
     mealChildDiv = document.createElement("div");
 
     mealChildDiv.innerHTML = mealTagInfo;
     mealParentDiv.appendChild(mealChildDiv);
 
     mealChildDiv.className = "m-5 col-md-3";
-
 }
