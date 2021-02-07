@@ -12,6 +12,9 @@ getDataFromApi = (foodName) => {
 
 //search btn
 getId("search-btn").addEventListener("click", () => {
+    catchHtmlTagById("meal-details");
+    catchHtmlTagById("meal-parent-div");
+
     const searchInputText = getId("search-input-text").value;
     getDataFromApi(searchInputText);
 })
@@ -37,13 +40,12 @@ const display = (data) => {
         const mealImg = mealList.strMealThumb;
         const mealId = mealList.idMeal;
 
-        const mealTagInfo = `
+        mealTagInfo = `
         <img onclick = "getDataByMealId('${mealId}')" class="img-fluid mb-4" src="${mealImg}" alt="">
         <h5 onclick = "getDataByMealId('${mealId}')" class = "text-danger text-center">${mealName}</h5>
         `;
 
         displayDetails(mealTagInfo);
-
     });
 
 }
@@ -56,13 +58,13 @@ getDataByMealId = (mealId) => {
 }
 
 
+let mealTagInfo ;
 
 displayMealDetails = (mealItem) => {
-
     const mealName = mealItem.strMeal;
     const mealImg = mealItem.strMealThumb;
 
-    const mealTagInfo = `
+     mealTagInfo = `
         <img  class="img-fluid mb-4" src="${mealImg}" alt="">
         <h2   class = "text-danger text-center">${mealName}</h2>
         <h4>Ingredients</h4>
@@ -83,13 +85,13 @@ displayMealDetails = (mealItem) => {
     catchHtmlTagById("meal-details");
 
     displayDetails(mealTagInfo);
+   
 
 }
-
+let mealChildDiv ;
 
 displayDetails = (mealTagInfo) => {
-
-    const mealChildDiv = document.createElement("div");
+    mealChildDiv = document.createElement("div");
 
     mealChildDiv.innerHTML = mealTagInfo;
     mealParentDiv.appendChild(mealChildDiv);
