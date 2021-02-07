@@ -18,7 +18,7 @@ getId("search-btn").addEventListener("click", () => {
 
 let mealParentDiv;
 
-catchHtmlTagById = (parentId)=>{
+catchHtmlTagById = (parentId) => {
     mealParentDiv = getId(parentId);
     mealParentDiv.innerHTML = "";
     mealParentDiv = getId(parentId);
@@ -28,16 +28,11 @@ const display = (data) => {
 
     console.log(data);
 
-    // let mealParentDiv = getId("meal-parent-div");
-    // mealParentDiv.innerHTML = "";
-    // mealParentDiv = getId("meal-parent-div");
-
     catchHtmlTagById("meal-parent-div");
 
     const mealItems = data.meals;
 
     mealItems.forEach(mealList => {
-        // const mealChildDiv = document.createElement("div");
         const mealName = mealList.strMeal;
         const mealImg = mealList.strMealThumb;
         const mealId = mealList.idMeal;
@@ -47,12 +42,8 @@ const display = (data) => {
         <h5 onclick = "getDataByMealId('${mealId}')" class = "text-danger text-center">${mealName}</h5>
         `;
 
-       displayDetails(mealTagInfo);
+        displayDetails(mealTagInfo);
 
-        // mealChildDiv.innerHTML = mealTagInfo;
-        // mealParentDiv.appendChild(mealChildDiv);
-
-        // mealChildDiv.className = "size m-5 col-md-3";
     });
 
 }
@@ -73,7 +64,20 @@ displayMealDetails = (mealItem) => {
 
     const mealTagInfo = `
         <img  class="img-fluid mb-4" src="${mealImg}" alt="">
-        <h5   class = "text-danger text-center">${mealName}</h5>
+        <h2   class = "text-danger text-center">${mealName}</h2>
+        <h4>Ingredients</h4>
+        <ul class="list-group">
+            <li class="list">${mealItem.strIngredient1}</li>
+            <li class="list">${mealItem.strIngredient2}</li>
+            <li class="list">${mealItem.strIngredient3}</li>
+            <li class="list">${mealItem.strIngredient4}</li>
+            <li class="list">${mealItem.strIngredient5}</li>
+            <li class="list">${mealItem.strIngredient6}</li>
+            <li class="list">${mealItem.strIngredient7}</li>
+            <li class="list">${mealItem.strIngredient8}</li>
+            <li class="list">${mealItem.strIngredient9}</li>
+            <li class="list">${mealItem.strIngredient10}</li>
+        </ul>
         `;
 
     catchHtmlTagById("meal-details");
@@ -83,13 +87,13 @@ displayMealDetails = (mealItem) => {
 }
 
 
-displayDetails =(mealTagInfo)=>{
+displayDetails = (mealTagInfo) => {
 
     const mealChildDiv = document.createElement("div");
-  
+
     mealChildDiv.innerHTML = mealTagInfo;
     mealParentDiv.appendChild(mealChildDiv);
 
-    mealChildDiv.className = "size m-5 col-md-3";
+    mealChildDiv.className = "m-5 col-md-3";
 
 }

@@ -1,1 +1,11 @@
-
+#meal-parent-div:hover{
+    cursor: pointer;
+}
+.border{
+    border: none;
+}
+.list{
+    list-style: none;
+    color: rgb(87, 85, 85);
+    font-size: 19px;
+}
